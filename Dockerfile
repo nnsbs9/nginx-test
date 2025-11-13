@@ -18,7 +18,6 @@ RUN auto/configure \
     --prefix=/usr/local/nginx \
     --with-http_ssl_module \
     --with-pcre \
-    --with-zlib \
     && make
 
 # Runtime stage
@@ -36,8 +35,10 @@ RUN apt-get update && apt-get install -y \
 COPY --from=builder /build/objs/nginx /usr/local/bin/nginx
 COPY --from=builder /build/conf /usr/local/nginx/conf
 
-# Create nginx user
-RUN useradd -r -s /bin/false nginx
+# Create nginx user and log directories
+RUN useradd -r -s /bin/false nginx && \
+    mkdir -p /usr/local/nginx/logs && \
+    chown -R nginx:nginx /usr/local/nginx
 
 # Expose ports
 EXPOSE 80 443
