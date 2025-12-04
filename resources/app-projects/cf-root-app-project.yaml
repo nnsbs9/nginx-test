@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cf-root-app-project
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destinations:
+  - namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
+  clusterResourceWhitelist:
+  - group: argoproj.io
+    kind: Application
+  - group: argoproj.io
+    kind: AppSet
+  - group: codefresh.io
+    kind: PromotionTemplate
+  - group: codefresh.io
+    kind: Product
+  - group: codefresh.io
+    kind: RestrictedGitSource
+  - group: codefresh.io
+    kind: WorkflowTemplate
+  - group: codefresh.io
+    kind: ClusterTemplate
+  - group: codefresh.io
+    kind: PromotionPolicy
+  - group: codefresh.io
+    kind: PromotionFlow
